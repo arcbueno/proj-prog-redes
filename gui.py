@@ -6,6 +6,7 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.core.window import Window
 from kivy.uix.gridlayout import GridLayout
+from file import File
 
 
 class MyApp(App):
@@ -18,15 +19,20 @@ class MyApp(App):
     global layout_1
     global layout_2
 
+    def onInit():
+        text=File().get_text()
+        return text
+
     ti = TextInput(text="")
     bt = Button(text=">>")
-    text = TextInput(text="This should be a chatbox")
+    text = TextInput(text=onInit())
     layout_1 = GridLayout(cols=1)
     layout_2= GridLayout(cols=2)
 
     def onClick(self):
         text.text = text.text + '\nme: ' + ti.text
         ti.text = ""
+        File().write(text.text)
 
     def build(self):
 
@@ -57,13 +63,5 @@ class MyApp(App):
 
         return layout_1
 
-
-
 Window.size = 300, 400
 MyApp().run()
-
-
-app.run()
-
-
-print ("here")
